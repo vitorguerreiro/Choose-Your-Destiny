@@ -97,6 +97,6 @@ session_start();
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'faceobok-jssdk'));      
     </script>
-        <a href="#" onclick="facebook_logout();">Logout Facebook</a>
+        <a href="#" onclick="facebook_logout();">Logout</a>
     </body>
 </html>

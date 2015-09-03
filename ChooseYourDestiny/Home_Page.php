@@ -75,14 +75,21 @@ session_start();
                     {
                         $_SESSION['search_venue'] = $_POST['venue'];
                         
-                        //require_once 'Foursquare/Foursquare_Search.php';
-                        
-                        require_once 'Recommendation/Prepare_Categories.php';
-                        require_once 'Recommendation/Prepare_Categories_UserLiked.php';
-                        require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
-                        require_once 'Recommendation/K-Means.php';
-                        require_once 'Recommendation/Nearest_Users.php';
-                        require_once 'Recommendation/Top_Users.php';
+                        if($_SESSION['user_mode'] == 'facebook')
+                        {
+                            $user = $_SESSION['user_id'];
+                            
+                            require_once 'Recommendation/Prepare_Categories.php';
+                            require_once 'Recommendation/Prepare_Categories_UserLiked.php';
+                            require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
+                            require_once 'Recommendation/K-Means.php';
+                            require_once 'Recommendation/Nearest_Users.php';
+                            require_once 'Recommendation/Top_Users.php';
+                        }
+                        else if($_SESSION['user_mode'] == 'simple')
+                        {
+                            $user = $_SESSION['user_id'];
+                        }
                         
                         require_once 'Foursquare/Foursquare_Search_Recommendation.php';
                         require_once 'Foursquare/Foursquare_Search.php';

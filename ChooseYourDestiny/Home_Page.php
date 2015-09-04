@@ -1,37 +1,31 @@
 <?php
 session_start();
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Choose Your Destiny</title>
 
-<html>
-    <head>
-        <title>Choose Your Destiny</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/skel.min.js"></script>
-        <script src="assets/js/skel-viewport.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-        <script src="assets/js/main.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     </head>
-    <body class="homepage">
-        <script type="text/javascript">
-            function logout() {
-                location.replace("Index.php");
-            }
-
-            function edit_profile() {
-                location.replace("SimpleUser/Edit_Profile.php");
-            }
-        </script>
+    <body style="padding-top: 70px;">
         <?php
             if($_SESSION['user_mode'] == 'facebook')
             {
@@ -50,389 +44,118 @@ session_start();
                 <?php
             }
         ?>
-        <div id="page-wrapper">
-            <!-- Header -->
-            <div id="header-wrapper">
-                <div class="container">
-                    <!-- Header -->
-                    <header id="header">
-                        <div class="inner">
-                            <!-- Logo -->
-                            <h1><a href="index.html" id="logo">Choose Your Destiny</a></h1>
-                            <!-- Nav -->
-                            <nav id="nav">
-                                <ul>
-                                    <li class="current_page_item"><a href="index.html">Home</a></li>
-                                    <li>
-                                        <a href="#">Dropdown</a>
-                                        <ul>
-                                            <li><a href="#">Lorem ipsum dolor</a></li>
-                                            <li><a href="#">Magna phasellus</a></li>
-                                            <li>
-                                                <a href="#">Phasellus consequat</a>
-                                                <ul>
-                                                    <li><a href="#">Lorem ipsum dolor</a></li>
-                                                    <li><a href="#">Phasellus consequat</a></li>
-                                                    <li><a href="#">Magna phasellus</a></li>
-                                                    <li><a href="#">Etiam dolore nisl</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="#">Veroeros feugiat</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="left-sidebar.html">Left Sidebar</a></li>
-                                    <?php
-                                        if($_SESSION['user_mode'] == 'facebook')
-                                        {
-                                            ?>
-                                            <li>
-                                            <?php
-                                            require_once 'Facebook/FB_Logout.php';
-                                            ?>
-                                            </li>
-                                            <?php
-                                        }
-                                        else if($_SESSION['user_mode'] == 'simple')
-                                        {
-                                            ?>
-                                                <li><a href="#" onclick="edit_profile();">Account</a></li>
-                                                <li><a href="#" onclick="logout();return false;">Logout</a></li>
-                                            <?php
-                                        }
-                                    ?>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="Home_Page.php" style="color: white">Choose Your Destiny</a>
+                    <form class="navbar-form navbar-left" role="search" method="POST">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="venue" placeholder="E.g. Campinas">                        
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        style="border-radius: 0px;">
+                                  <span class="caret"></span>
+                                  <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Action</a></li>
+                                  <li><a href="#">Another action</a></li>
+                                  <li><a href="#">Something else here</a></li>
+                                  <li role="separator" class="divider"></li>
+                                  <li><a href="#">Separated link</a></li>
                                 </ul>
-                            </nav>
+                                <button type="button" type="submit" name="button_search_venue" class="btn btn-default">Search</button>                               
+                            </div>
                         </div>
-                    </header>
-                    <!-- Banner -->
-                    <div id="banner">
-                        <div id="search-content">                
-                            <form method="POST" action="" id="form-search">
-                                <input class="form-search-box" type="text" name="venue" placeholder="E.g. Campinas">
-                                <button id="search_button" type="submit" class="button" name="button_search_venue">Search</button>
-                            </form>
-                        </div> 
-                    </div>
+                    </form>
                 </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="Home_Page.php">Home</a></li>                   
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Saved Places</a></li>
+                                <li><a href="#">History</a></li>
+                                <?php
+                                    if($_SESSION['user_mode'] == 'simple')
+                                    {
+                                        ?>
+                                        <li><a href="SimpleUser/Edit_Profile.php">Edit Profile</a></li>
+                                        <?php
+                                    }
+                                ?>
+                                <li role="separator" class="divider"></li>
+                                <?php
+                                    if($_SESSION['user_mode'] == 'facebook')
+                                    {
+                                        ?>
+                                        <li>
+                                        <?php
+                                        require_once 'Facebook/FB_Logout.php';
+                                        ?>
+                                        </li>
+                                        <?php
+                                    }
+                                    else if($_SESSION['user_mode'] == 'simple')
+                                    {
+                                        ?>
+                                        <li><a href="Index.php">Logout</a></li>
+                                        <?php
+                                    }
+                                ?>
+                            </ul>                         
+                        </li>
+                        <li><a href="#">About</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container-fluid" style="padding-top: 100px;">
+            <div class="text-center">
+                <h1>What are you looking for?</h1>
             </div>
-            
-            <?php
-                if(isset($_POST['button_search_venue']))
+            <div class="row text-center">
+                <div class="col-xs-6 col-sm-4">Food</div>
+                <div class="col-xs-6 col-sm-4">Nightlife</div>
+                <div class="col-xs-6 col-sm-4">Shopping</div>
+            </div>
+        </div>
+        
+        <?php
+            if(isset($_POST['button_search_venue']))
+            {
+                $_SESSION['search_venue'] = $_POST['venue'];
+
+                if($_SESSION['user_mode'] == 'facebook')
                 {
-                    $_SESSION['search_venue'] = $_POST['venue'];
+                    $user = $_SESSION['user_id'];
 
-                    if($_SESSION['user_mode'] == 'facebook')
-                    {
-                        $user = $_SESSION['user_id'];
-
-                        require_once 'Recommendation/Prepare_Categories.php';
-                        require_once 'Recommendation/Prepare_Categories_UserLiked.php';
-                        require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
-                        require_once 'Recommendation/K-Means.php';
-                        require_once 'Recommendation/Nearest_Users.php';
-                        require_once 'Recommendation/Top_Users.php';
-                    }
-                    else if($_SESSION['user_mode'] == 'simple')
-                    {
-                        $user = $_SESSION['user_id'];
-                    }
-
-                    require_once 'Foursquare/Foursquare_Search_Recommendation.php';
-                    require_once 'Foursquare/Foursquare_Search.php';
+                    require_once 'Recommendation/Prepare_Categories.php';
+                    require_once 'Recommendation/Prepare_Categories_UserLiked.php';
+                    require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
+                    require_once 'Recommendation/K-Means.php';
+                    require_once 'Recommendation/Nearest_Users.php';
+                    require_once 'Recommendation/Top_Users.php';
                 }
-            ?>
-            
-            <!-- Main Wrapper -->
-            <div id="main-wrapper">
-                <div class="wrapper style1">
-                    <div class="inner">
-                        <!-- Feature 1 -->
-                        <section class="container box feature1">
-                            <div class="row">
-                                <div class="12u">
-                                    <header class="first major">
-                                        <h2>This is an important heading</h2>
-                                        <p>And this is where we talk about why we’re <strong>pretty awesome</strong> ...</p>
-                                    </header>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="4u 12u(mobile)">
-                                    <section>
-                                        <a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-                                        <header class="second icon fa-user">
-                                            <h3>Here's a Heading</h3>
-                                            <p>And a subtitle</p>
-                                        </header>
-                                    </section>
-                                </div>
-                                <div class="4u 12u(mobile)">
-                                    <section>
-                                        <a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-                                        <header class="second icon fa-cog">
-                                            <h3>Also a Heading</h3>
-                                            <p>And another subtitle</p>
-                                        </header>
-                                    </section>
-                                </div>
-                                <div class="4u 12u(mobile)">
-                                    <section>
-                                        <a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-                                        <header class="second icon fa-bar-chart-o">
-                                            <h3>Another Heading</h3>
-                                            <p>And yes, a subtitle</p>
-                                        </header>
-                                    </section>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="12u">
-                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper
-                                    bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod
-                                    quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit
-                                    amet pulvinar. Nam nec turpis.</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-                    <div class="wrapper style2">
-                            <div class="inner">
+                else if($_SESSION['user_mode'] == 'simple')
+                {
+                    $user = $_SESSION['user_id'];
+                }
 
-                                    <!-- Feature 2 -->
-                                            <section class="container box feature2">
-                                                    <div class="row">
-                                                            <div class="6u 12u(mobile)">
-                                                                    <section>
-                                                                            <header class="major">
-                                                                                    <h2>And this is a subheading</h2>
-                                                                                    <p>It’s important but clearly not *that* important</p>
-                                                                            </header>
-                                                                            <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-                                                                            Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-                                                                            Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-                                                                            consequat etiam.</p>
-                                                                            <footer>
-                                                                                    <a href="#" class="button medium icon fa-arrow-circle-right">Let's do this</a>
-                                                                            </footer>
-                                                                    </section>
-                                                            </div>
-                                                            <div class="6u 12u(mobile)">
-                                                                    <section>
-                                                                            <header class="major">
-                                                                                    <h2>This is also a subheading</h2>
-                                                                                    <p>And is as unimportant as the other one</p>
-                                                                            </header>
-                                                                            <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus.
-                                                                            Praesent semper mod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat.
-                                                                            Aliquam luctus et mattis lectus sit amet pulvinar. Nam turpis nisi
-                                                                            consequat etiam.</p>
-                                                                            <footer>
-                                                                                    <a href="#" class="button medium alt icon fa-info-circle">Wait, what?</a>
-                                                                            </footer>
-                                                                    </section>
-                                                            </div>
-                                                    </div>
-                                            </section>
-
-                                    </div>
-                    </div>
-                    <div class="wrapper style3">
-                            <div class="inner">
-                                    <div class="container">
-                                            <div class="row">
-                                                    <div class="8u 12u(mobile)">
-
-                                                            <!-- Article list -->
-                                                                    <section class="box article-list">
-                                                                            <h2 class="icon fa-file-text-o">Recent Posts</h2>
-
-                                                                            <!-- Excerpt -->
-                                                                                    <article class="box excerpt">
-                                                                                            <a href="#" class="image left"><img src="images/pic04.jpg" alt="" /></a>
-                                                                                            <div>
-                                                                                                    <header>
-                                                                                                            <span class="date">July 24</span>
-                                                                                                            <h3><a href="#">Repairing a hyperspace window</a></h3>
-                                                                                                    </header>
-                                                                                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-                                                                                                    semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-                                                                                                    feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-                                                                                            </div>
-                                                                                    </article>
-
-                                                                            <!-- Excerpt -->
-                                                                                    <article class="box excerpt">
-                                                                                            <a href="#" class="image left"><img src="images/pic05.jpg" alt="" /></a>
-                                                                                            <div>
-                                                                                                    <header>
-                                                                                                            <span class="date">July 18</span>
-                                                                                                            <h3><a href="#">Adventuring with a knee injury</a></h3>
-                                                                                                    </header>
-                                                                                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-                                                                                                    semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-                                                                                                    feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-                                                                                            </div>
-                                                                                    </article>
-
-                                                                            <!-- Excerpt -->
-                                                                                    <article class="box excerpt">
-                                                                                            <a href="#" class="image left"><img src="images/pic06.jpg" alt="" /></a>
-                                                                                            <div>
-                                                                                                    <header>
-                                                                                                            <span class="date">July 14</span>
-                                                                                                            <h3><a href="#">Preparing for Y2K38</a></h3>
-                                                                                                    </header>
-                                                                                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus
-                                                                                                    semper mod quisturpis nisi consequat etiam lorem. Phasellus quam turpis,
-                                                                                                    feugiat et sit amet ornare in, hendrerit in lectus semper mod quis eget mi dolore.</p>
-                                                                                            </div>
-                                                                                    </article>
-
-                                                                    </section>
-                                                    </div>
-                                                    <div class="4u 12u(mobile)">
-
-                                                            <!-- Spotlight -->
-                                                                    <section class="box spotlight">
-                                                                            <h2 class="icon fa-file-text-o">Spotlight</h2>
-                                                                            <article>
-                                                                                    <a href="#" class="image featured"><img src="images/pic07.jpg" alt=""></a>
-                                                                                    <header>
-                                                                                            <h3><a href="#">Neural Implants</a></h3>
-                                                                                            <p>The pros and cons. Mostly cons.</p>
-                                                                                    </header>
-                                                                                    <p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper mod
-                                                                                    quisturpis nisi consequat ornare in, hendrerit in lectus semper mod quis eget mi quat etiam
-                                                                                    lorem. Phasellus quam turpis, feugiat sed et lorem ipsum dolor consequat dolor feugiat sed
-                                                                                    et tempus consequat etiam.</p>
-                                                                                    <p>Lorem ipsum dolor quam turpis, feugiat sit amet ornare in, hendrerit in lectus semper
-                                                                                    mod quisturpis nisi consequat etiam lorem sed amet quam turpis.</p>
-                                                                                    <footer>
-                                                                                            <a href="#" class="button alt icon fa-file-o">Continue Reading</a>
-                                                                                    </footer>
-                                                                            </article>
-                                                                    </section>
-
-                                                    </div>
-                                            </div>
-                                    </div>
-                            </div>
-                    </div>
-            </div>
-
-                <!-- Footer Wrapper -->
-                        <div id="footer-wrapper">
-                                <footer id="footer" class="container">
-                                        <div class="row">
-                                                <div class="3u 12u(mobile)">
-
-                                                        <!-- Links -->
-                                                                <section>
-                                                                        <h2>Filler Links</h2>
-                                                                        <ul class="divided">
-                                                                                <li><a href="#">Quam turpis feugiat dolor</a></li>
-                                                                                <li><a href="#">Amet ornare in hendrerit </a></li>
-                                                                                <li><a href="#">Semper mod quisturpis nisi</a></li>
-                                                                                <li><a href="#">Consequat etiam phasellus</a></li>
-                                                                                <li><a href="#">Amet turpis, feugiat et</a></li>
-                                                                                <li><a href="#">Ornare hendrerit lectus</a></li>
-                                                                                <li><a href="#">Semper mod quis et dolore</a></li>
-                                                                                <li><a href="#">Amet ornare in hendrerit</a></li>
-                                                                                <li><a href="#">Consequat lorem phasellus</a></li>
-                                                                                <li><a href="#">Amet turpis, feugiat amet</a></li>
-                                                                                <li><a href="#">Semper mod quisturpis</a></li>
-                                                                        </ul>
-                                                                </section>
-
-                                                </div>
-                                                <div class="3u 12u(mobile)">
-
-                                                        <!-- Links -->
-                                                                <section>
-                                                                        <h2>More Filler</h2>
-                                                                        <ul class="divided">
-                                                                                <li><a href="#">Quam turpis feugiat dolor</a></li>
-                                                                                <li><a href="#">Amet ornare in in lectus</a></li>
-                                                                                <li><a href="#">Semper mod sed tempus nisi</a></li>
-                                                                                <li><a href="#">Consequat etiam phasellus</a></li>
-                                                                        </ul>
-                                                                </section>
-
-                                                        <!-- Links -->
-                                                                <section>
-                                                                        <h2>Even More Filler</h2>
-                                                                        <ul class="divided">
-                                                                                <li><a href="#">Quam turpis feugiat dolor</a></li>
-                                                                                <li><a href="#">Amet ornare hendrerit lectus</a></li>
-                                                                                <li><a href="#">Semper quisturpis nisi</a></li>
-                                                                                <li><a href="#">Consequat lorem phasellus</a></li>
-                                                                        </ul>
-                                                                </section>
-
-                                                </div>
-                                                <div class="6u 12u(mobile)">
-
-                                                        <!-- About -->
-                                                                <section>
-                                                                        <h2><strong>ZeroFour</strong> by HTML5 UP</h2>
-                                                                        <p>Hi! This is <strong>ZeroFour</strong>, a free, fully responsive HTML5 site
-                                                                        template by <a href="http://n33.co/">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a>.
-                                                                        It's <a href="http://html5up.net/license/">Creative Commons Attribution</a>
-                                                                        licensed so use it for any personal or commercial project (just credit us
-                                                                        for the design!).</p>
-                                                                        <a href="#" class="button alt icon fa-arrow-circle-right">Learn More</a>
-                                                                </section>
-
-                                                        <!-- Contact -->
-                                                                <section>
-                                                                        <h2>Get in touch</h2>
-                                                                        <div>
-                                                                                <div class="row">
-                                                                                        <div class="6u 12u(mobile)">
-                                                                                                <dl class="contact">
-                                                                                                        <dt>Twitter</dt>
-                                                                                                        <dd><a href="#">@untitled-corp</a></dd>
-                                                                                                        <dt>Facebook</dt>
-                                                                                                        <dd><a href="#">facebook.com/untitled</a></dd>
-                                                                                                        <dt>WWW</dt>
-                                                                                                        <dd><a href="#">untitled.tld</a></dd>
-                                                                                                        <dt>Email</dt>
-                                                                                                        <dd><a href="#">user@untitled.tld</a></dd>
-                                                                                                </dl>
-                                                                                        </div>
-                                                                                        <div class="6u 12u(mobile)">
-                                                                                                <dl class="contact">
-                                                                                                        <dt>Address</dt>
-                                                                                                        <dd>
-                                                                                                                1234 Fictional Rd<br />
-                                                                                                                Nashville, TN 00000-0000<br />
-                                                                                                                USA
-                                                                                                        </dd>
-                                                                                                        <dt>Phone</dt>
-                                                                                                        <dd>(000) 000-0000</dd>
-                                                                                                </dl>
-                                                                                        </div>
-                                                                                </div>
-                                                                        </div>
-                                                                </section>
-
-                                                </div>
-                                        </div>
-                                        <div class="row">
-                                                <div class="12u">
-                                                        <div id="copyright">
-                                                                <ul class="menu">
-                                                                        <li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                </footer>
-                        </div>
-
-        </div>		
-    </body>
+                require_once 'Foursquare/Foursquare_Search_Recommendation.php';
+                require_once 'Foursquare/Foursquare_Search.php';
+            }
+        ?>
+    </body> 
 </html>
-
-

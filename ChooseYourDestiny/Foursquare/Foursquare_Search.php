@@ -25,12 +25,11 @@ $venues_values = null;
 
 $radius = mt_rand(5000, 10000);
 
-// PERMITE CONEXOES COM SERVIDORES EXTERNOS
-
+/* Foursquare explore */
 $curlhandle = curl_init();
 curl_setopt($curlhandle, CURLOPT_URL, "https://api.foursquare.com/v2/venues/explore?ll=$latitude,$longitude"
         . "&radius=$radius&client_id=$client_key&client_secret=$client_secret&v=20140814");
-curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); // verdadeiro para retornar como string
+curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); /* Verdadeiro para retornar como string */
 $response = curl_exec($curlhandle);
 curl_close($curlhandle);
 

@@ -1,10 +1,5 @@
 <?php
 session_start();
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 $link = require 'MySQL/ConnectionDB.php';
 
@@ -25,7 +20,7 @@ $users = mysqli_query($link, "SELECT user_id FROM Nearest_Users WHERE current_us
 $num = 0;
 $qtd_appear = array();
 
-// percorre tabela e retorna quantidade de vezes que um determinado usuário aparece nas centroides escolhidas.
+/* Percorre tabela e retorna quantidade de vezes que um determinado usuário aparece nas centroides escolhidas */
 while($value = mysqli_fetch_array($users)) 
 {
     $user_info = mysqli_query($link, "SELECT user_id FROM Nearest_Users WHERE $value[0] = user_id AND current_user_id = $user");
@@ -37,15 +32,15 @@ while($value = mysqli_fetch_array($users))
     $num++;
 }
 
-// funcao para ordenar os usuários que aparecem mais vezes nas centroides em que o usuário se encaixa mais
+/* Função para ordenar os usuários que aparecem mais vezes nas centroides em que o usuário se encaixa mais */
 function array_sorter (&$array, $key) {
     $sorter=array();
     $ret=array();
-    reset($array); // seta o ponteiro interno do array para sua primeira posicao
+    reset($array); /* Seta o ponteiro interno do array para sua primeira posição */
     foreach ($array as $i => $val) {
         $sorter[$i] = $val[$key];
     }
-    arsort($sorter); // ordena um array e mantém a relacão correspondente
+    arsort($sorter); /* Ordena um array e mantém a relação correspondente */
     foreach ($sorter as $i => $val) {
         $ret[$i]=$array[$i];
     }
@@ -54,12 +49,12 @@ function array_sorter (&$array, $key) {
 
 array_sorter($qtd_appear,"1");
 
-$selected_users = array_slice($qtd_appear, 0, 100); // seleciona as 20 primeiras posicoes do array
+$selected_users = array_slice($qtd_appear, 0, 100); /* Seleciona as 20 primeiras posicoes do array */
 
 $category_array = array();
 $qtd = 0;
 
-//procurar pelos nomes dos lugares que a pessoa fez check-in no foursquare e encontrar categorias
+/* Procurar pelos nomes dos lugares que a pessoa fez check-in no facebook e encontrar categorias */
 foreach ($selected_users as $key => $value) 
 {
     $find_locations = mysqli_query($link, "SELECT place_name, place_latitude, place_longitude FROM FB_Friend_Places WHERE fb_friend_id = $value[0] GROUP BY place_name");
@@ -78,7 +73,7 @@ foreach ($selected_users as $key => $value)
         {
             $values = mysqli_fetch_array($check);
             if($values != NULL){
-                $category_array[$qtd] = $values; // array é populado com categorias relacionadas com os gostos dos usuários
+                $category_array[$qtd] = $values; /* Array é populado com categorias relacionadas com os gostos dos usuários */
                 $qtd++;
             }
         }    

@@ -20,7 +20,7 @@ if($search_location){
     $category_array = array();
     $qtd = 0;
 
-    // procurar pelos nomes dos lugares que a pessoa fez check-in no facebook e encontrar categorias
+    /* Procurar pelos nomes dos lugares que a pessoa fez check-in no facebook e encontrar categorias */
     while ($value = mysqli_fetch_array($search_location)) 
     {
         $insert = null;
@@ -28,7 +28,7 @@ if($search_location){
         $venue_found = FALSE;
             
         // $category_found = find_categories($value[0],$value[1],$value[2]); // find categories function is inside foursquare-search-kmeans     
-        // Foursquare search venues
+        /* Foursquare search venues */
         $curlhandle = curl_init();
         curl_setopt($curlhandle, CURLOPT_URL, "https://api.foursquare.com/v2/venues/search?ll=$value[1],$value[2]"
                 . "&radius=$radius&query=$location&limit=10&client_id=$client_key&client_secret=$client_secret&v=20140814");

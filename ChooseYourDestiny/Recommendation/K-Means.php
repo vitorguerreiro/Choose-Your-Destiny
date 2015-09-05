@@ -1,15 +1,10 @@
 <?php
 session_start();
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 require 'Recommendation/Initialise_Centroids.php';
 $link = require 'MySQL/ConnectionDB.php';
 
-$ctg_likes = mysqli_query($link, "SELECT category FROM FB_User_Likes GROUP BY category"); // pega as categorias que o usuário atual tem likes
+$ctg_likes = mysqli_query($link, "SELECT category FROM FB_User_Likes GROUP BY category"); /* Pega as categorias que o usuário atual tem likes */
 $num_rows = mysqli_num_rows($ctg_likes);
 
 if($_SESSION['user_mode'] == 'facebook')
@@ -29,17 +24,17 @@ if($num_rows)
     while ($item = mysqli_fetch_array($ctg_likes)) 
     {      
         require_once 'Recommendation/Prepare_Data.php';
-        $data = search($item[0]); // procura categoria na tabela onde likes <> 0
+        $data = search($item[0]); /* Procura categoria na tabela onde likes <> 0 */
         $mapeamento = array();
 
-        // valor de k setado manualmente para 5 e enviado para a funcao de inicializacao de centroides
-        $centroids = inicializa_centroids($data, 5); // posiciona randomicamente as centroides
+        /* Valor de k setado manualmente para 5 e enviado para a função de inicialização de centroides */
+        $centroids = inicializa_centroids($data, 5); /* Posiciona randomicamente as centroides */
 
         while(1)
         {
-            $likes_centroides = posicionar_centroides($data,$centroids); // funcao para posicionar as centroides
-            $changed = false; // variável para verificar mudanca do posicionamento das centroides
-            $current_category = $data[0][0]; // qual a categoria corrente
+            $likes_centroides = posicionar_centroides($data,$centroids); /* Função para posicionar as centroides */
+            $changed = false; /* Variável para verificar mudança do posicionamento das centroides */
+            $current_category = $data[0][0]; /* Qual a categoria corrente */
 
             foreach($likes_centroides as $posicao => $centroide) //$likes_centroides -> [n] -> centroide
             {
@@ -56,7 +51,7 @@ if($num_rows)
                 
                 save_kmeans_centroids_positions($centroids,$current_category, $user);
                 
-                if($i == $num_rows-1) // verifica se já está na ultima iteracao (ultima categoria a verificar)
+                if($i == $num_rows-1) /* Verifica se já está na última iteração (última categoria a verificar) */
                 {
                     save_kmeans_data($result_kmeans,$user);
                     return $result_kmeans;
@@ -148,27 +143,27 @@ function save_kmeans_data($result_kmeans, $user)
 
 function posicionar_centroides($data, $centroids)
 {
-    // para cada (ctg x likes) verificar qual centroide é mais próximo
+    /* Para cada (category x likes) verificar qual centroide é mais próximo */
     
     $like_in_centroid = array();
 
-    foreach($data as $data_position => $data_position_array) //$data -> [n] -> [0][1]
+    foreach($data as $data_position => $data_position_array) /* $data -> [n] -> [0][1] */
     {
         $minDist = null;
         $right_centroid = null;
-        foreach($centroids as $centroid_position => $centroid_position_array) // $centroide -> [n] -> [0][1]
+        foreach($centroids as $centroid_position => $centroid_position_array) /* $centroide -> [n] -> [0][1] */
         {
             $dist = 0;
-            foreach($centroid_position_array as $pos => $value) // $centroid_position_array -> [0] ou [1] -> [like_ctg] ou [num_likes]
+            foreach($centroid_position_array as $pos => $value) /* $centroid_position_array -> [0] ou [1] -> [like_ctg] ou [num_likes] */
             {
-                // distancia absoluta é o módulo da distancia entre o valor das centroides até o primeiro like de um usuário.
-                // primeiro é verificacao no eixo x e depois no eixo y... a verificacao acontece com todas as centroides para cada like
+                /* Distância absoluta é o módulo da distância entre o valor das centroides até o primeiro like de um usuário.
+                 * Primeiro é verificação no eixo x e depois no eixo y... a verificação acontece com todas as centroides para cada like */
                 $dist += abs($value - $data_position_array[$pos]);
             }
             if(!$minDist || $dist < $minDist) 
             {
                 $minDist = $dist;
-                // recebe o valor 'k' da centroide
+                /* Recebe o valor 'k' da centroide */
                 $right_centroid = $centroid_position;
             }
         }
@@ -182,20 +177,20 @@ function update_centroides($mapping, $data, $k)
     $centroids = array();
     $counts = array_count_values($mapping);
 
-    foreach($mapping as $posicao => $centroid) // $mapeamento -> [n] -> centroide
+    foreach($mapping as $posicao => $centroid) /* $mapeamento -> [n] -> centroide */
     {
-        foreach($data[$posicao] as $pos => $value) //$data[posicao] -> 0 ou 1 -> [ctg] ou [num_likes]
+        foreach($data[$posicao] as $pos => $value) /* $data[posicao] -> 0 ou 1 -> [ctg] ou [num_likes] */
         {
-            $centroids[$centroid][$pos] += ($value/$counts[$centroid]); // para cada centroide, é feite uma divisão do numero de y para os seus
-                                                                        // dados correspondentes, assim achando novas posicoes para as centroides
-                                                                        // $centoids[0 a 5][0 ou 1] += num_likes/qtd de itens na centroide n
+            $centroids[$centroid][$pos] += ($value/$counts[$centroid]); /* Para cada centroide, é feita uma divisão do número de y para os seus
+                                                                         * dados correspondentes, assim achando novas posições para as centroides
+                                                                         * $centoids[0 a 5][0 ou 1] += num_likes/qtd de itens na centroide n */
         }
     }
     
     return $centroids;
 }
 
-function formatResults($mapping, $data) // formata o resultado dentro do array
+function formatResults($mapping, $data) /* Formata o resultado dentro do array */
 {
     $result_kmeans  = array();
     $inside_data = array();

@@ -40,14 +40,14 @@ $array_food = array();
 
 if($_SESSION['user_mode'] == 'facebook')
 {   
-    // categorias novas
+    /* Categorias novas */
     while($value = mysqli_fetch_array($categories)) 
     {                  
         $check_category = mysqli_query($link, "SELECT * FROM Foursquare_Categories WHERE sub_id = '$value[ctg_id]'");
 
         $check_ctg_result = mysqli_fetch_array($check_category);
 
-        // GENERAL RECOMMENDATION
+        /* General Recommendation */
         if($check_ctg_result[main_ctg_name]!='Nightlife Spot' && $check_ctg_result[main_ctg_name]!='Food' && $check_ctg_result[main_ctg_name]!= null)
         {
             if($breakCondition < 30)
@@ -55,12 +55,12 @@ if($_SESSION['user_mode'] == 'facebook')
                 $categoryId = $value[ctg_id];
                 $radius = mt_rand(1000, 5000);
                 $limit = mt_rand(3, 7);
-                // PERMITE CONEXOES COM SERVIDORES EXTERNOS
 
+                /* Foursquare explore */
                 $curlhandle = curl_init();
                 curl_setopt($curlhandle, CURLOPT_URL, "https://api.foursquare.com/v2/venues/explore?ll=$latitude,$longitude&categoryId=$categoryId"
                         . "&radius=$radius&limit=$limit&client_id=$client_key&client_secret=$client_secret&v=20140501");
-                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); // verdadeiro para retornar como string
+                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); /* Verdadeiro para retornar como string */
                 $response = curl_exec($curlhandle);
                 curl_close($curlhandle);
 
@@ -125,7 +125,7 @@ if($_SESSION['user_mode'] == 'facebook')
             }   
         }
 
-        // RECOMMENDED NIGHTLIFE PLACES
+        /* RECOMMENDED NIGHTLIFE PLACES */
         else if($d_ctg === false && $check_ctg_result[main_ctg_name] === 'Nightlife Spot')
         {
             if($breakConditionNightlife < 30)
@@ -133,12 +133,12 @@ if($_SESSION['user_mode'] == 'facebook')
                 $categoryId = $value[ctg_id];
                 $radius = mt_rand(1000, 5000);
                 $limit = mt_rand(3, 7);
-                // PERMITE CONEXOES COM SERVIDORES EXTERNOS
 
+                /* Foursquare explore */
                 $curlhandle = curl_init();
                 curl_setopt($curlhandle, CURLOPT_URL, "https://api.foursquare.com/v2/venues/explore?ll=$latitude,$longitude&categoryId=$categoryId"
                         . "&radius=$radius&limit=$limit&client_id=$client_key&client_secret=$client_secret&v=20140501");
-                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); // verdadeiro para retornar como string
+                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); /* Verdadeiro para retornar como string */
                 $response = curl_exec($curlhandle);
                 curl_close($curlhandle);
 
@@ -204,7 +204,7 @@ if($_SESSION['user_mode'] == 'facebook')
 
         }
 
-        // recommended food places
+        /* recommended food places */
         else if($d_ctg === false && $check_ctg_result[main_ctg_name] === 'Food')
         {
             if($breakConditionFood < 30)
@@ -212,12 +212,12 @@ if($_SESSION['user_mode'] == 'facebook')
                 $categoryId = $value[ctg_id];
                 $radius = mt_rand(1000, 5000);
                 $limit = mt_rand(3, 7);
-                // PERMITE CONEXOES COM SERVIDORES EXTERNOS
 
+                /* Foursquare explore */
                 $curlhandle = curl_init();
                 curl_setopt($curlhandle, CURLOPT_URL, "https://api.foursquare.com/v2/venues/explore?ll=$latitude,$longitude&categoryId=$categoryId"
                         . "&radius=$radius&limit=$limit&client_id=$client_key&client_secret=$client_secret&v=20140501");
-                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); // verdadeiro para retornar como string
+                curl_setopt($curlhandle, CURLOPT_RETURNTRANSFER, 1); /* Verdadeiro para retornar como string */
                 $response = curl_exec($curlhandle);
                 curl_close($curlhandle);
 

@@ -58,7 +58,7 @@ session_start();
                     <a class="navbar-brand" href="Home_Page.php" style="color: white">Choose Your Destiny</a>
                     <form class="navbar-form navbar-left" role="search" method="POST">
                         <div class="input-group">
-                            <input type="text" class="form-control" name="venue" placeholder="E.g. Campinas">                        
+                            <input type="text" class="form-control" name="venue" placeholder="E.g. Outback">                        
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         style="border-radius: 0px;">
@@ -66,13 +66,38 @@ session_start();
                                   <span class="sr-only">Toggle Dropdown</span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                  <li><a href="#">Action</a></li>
-                                  <li><a href="#">Another action</a></li>
-                                  <li><a href="#">Something else here</a></li>
+                                  <li><a href="#">Food</a></li>
+                                  <li><a href="#">Nightlife</a></li>
+                                  <li><a href="#">Shopping</a></li>
                                   <li role="separator" class="divider"></li>
-                                  <li><a href="#">Separated link</a></li>
+                                  <li><a href="#">General</a></li>
                                 </ul>
-                                <button type="button" type="submit" name="button_search_venue" class="btn btn-default">Search</button>                               
+                                <button type="button" type="submit" name="button_search_venue" class="btn btn-default">Search</button>     
+                                <?php
+                                    if(isset($_POST['button_search_venue']))
+                                    {
+                                        $_SESSION['search_venue'] = $_POST['venue'];
+
+                                        if($_SESSION['user_mode'] == 'facebook')
+                                        {
+                                            $user = $_SESSION['user_id'];
+
+                                            require_once 'Recommendation/Prepare_Categories.php';
+                                            require_once 'Recommendation/Prepare_Categories_UserLiked.php';
+                                            require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
+                                            require_once 'Recommendation/K-Means.php';
+                                            require_once 'Recommendation/Nearest_Users.php';
+                                            require_once 'Recommendation/Top_Users.php';
+                                        }
+                                        else if($_SESSION['user_mode'] == 'simple')
+                                        {
+                                            $user = $_SESSION['user_id'];
+                                        }
+
+                                        require_once 'Foursquare/Foursquare_Search_Recommendation.php';
+                                        require_once 'Foursquare/Foursquare_Search.php';
+                                    }
+                                ?>
                             </div>
                         </div>
                     </form>
@@ -126,36 +151,10 @@ session_start();
                 <h1>What are you looking for?</h1>
             </div>
             <div class="row text-center">
-                <div class="col-xs-6 col-sm-4">Food</div>
-                <div class="col-xs-6 col-sm-4">Nightlife</div>
-                <div class="col-xs-6 col-sm-4">Shopping</div>
+                <div class="col-xs-6 col-sm-4"><a>Food</a></div>
+                <div class="col-xs-6 col-sm-4"><a>Nightlife</a></div>
+                <div class="col-xs-6 col-sm-4"><a>Shopping</a></div>
             </div>
-        </div>
-        
-        <?php
-            if(isset($_POST['button_search_venue']))
-            {
-                $_SESSION['search_venue'] = $_POST['venue'];
-
-                if($_SESSION['user_mode'] == 'facebook')
-                {
-                    $user = $_SESSION['user_id'];
-
-                    require_once 'Recommendation/Prepare_Categories.php';
-                    require_once 'Recommendation/Prepare_Categories_UserLiked.php';
-                    require_once 'Recommendation/Prepare_Categories_FriendLiked.php';
-                    require_once 'Recommendation/K-Means.php';
-                    require_once 'Recommendation/Nearest_Users.php';
-                    require_once 'Recommendation/Top_Users.php';
-                }
-                else if($_SESSION['user_mode'] == 'simple')
-                {
-                    $user = $_SESSION['user_id'];
-                }
-
-                require_once 'Foursquare/Foursquare_Search_Recommendation.php';
-                require_once 'Foursquare/Foursquare_Search.php';
-            }
-        ?>
+        </div>               
     </body> 
 </html>

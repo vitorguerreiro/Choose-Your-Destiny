@@ -6,7 +6,7 @@ session_start();
  * and open the template in the editor.
  */
 
-$group = require_once 'Recommendation/kNN.php'; // retorna qual a centroide para cada categoria que o usuário se encaixa
+$group = require_once 'Recommendation/kNN.php'; /* Retorna qual a centroide para cada categoria que o usuário se encaixa */
 
 $link = require 'MySQL/ConnectionDB.php';
 
@@ -32,7 +32,7 @@ foreach ($group as $ctg => $value)
     
     while($row = mysqli_fetch_array($query)) // $row = [centroid], [ctg_id], [number_likes]
     {
-        $users = mysqli_query($link, "SELECT user_fb_id FROM Times_People_Like_Category "
+        $users = mysqli_query($link, "SELECT user_fb_id FROM Times_Friends_Like_Category "
                 . "WHERE like_category_id = '$row[1]' AND number_likes = '$row[2]'"
                 . "GROUP BY user_fb_id ");
         
@@ -42,7 +42,6 @@ foreach ($group as $ctg => $value)
                     . "'" . mysqli_escape_string($link, $id[0]) . "'),";
         } 
     }
-  
 }
 
 if($insert != "")

@@ -21,7 +21,7 @@ mysqli_query($link,"DELETE FROM Times_User_Like_Category WHERE user_id = $user")
 $get_likes_categories = mysqli_query($link, "SELECT * FROM FB_Likes_Categories");
 
 
-$times_user_like_category = "INSERT INTO Times_User_Like_Category (user_id,like_category,like_category_id,number_likes) VALUES";
+$times_user_like_category = "INSERT INTO Times_User_Like_Category (user_id, like_category, like_category_id, number_likes) VALUES";
 $insert = null;
 $has_likes = mysqli_query($link, "SELECT * FROM FB_User_Likes");
 $has_likes_num = mysqli_num_rows($has_likes);

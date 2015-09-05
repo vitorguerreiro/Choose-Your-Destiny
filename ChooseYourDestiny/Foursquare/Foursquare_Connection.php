@@ -9,7 +9,7 @@ $client_secret = "HJ2OWQRQT4OBJXQAJXQB3DS3V5P2PXJFOGB2ZFAOUMQ3HAKK";
 $_SESSION['foursquare_client_key'] = $client_key;
 $_SESSION['foursquare_client_secret'] = $client_secret;
 
-// Carrega Foursquare API library
+/* Carrega Foursquare API library */
 $foursquare = new FoursquareApi($client_key,$client_secret);
 
 return $foursquare;
